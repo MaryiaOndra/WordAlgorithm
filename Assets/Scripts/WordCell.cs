@@ -34,8 +34,7 @@ namespace WordAlgorithm
             
             if (trimmedLetter.IsEmpty())
             {
-                Debug.Log("FADE CELL");
-               // _canvasGroup.DOFade(0f, 0f);
+                _canvasGroup.DOFade(0f, 0f);
             }
             else
             {

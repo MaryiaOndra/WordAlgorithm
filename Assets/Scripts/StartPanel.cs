@@ -4,13 +4,19 @@ using UnityEngine.UI;
 
 namespace WordAlgorithm
 {
+    [RequireComponent(typeof(Canvas))]
     public class StartPanel : MonoBehaviour
     {
         [SerializeField] private Button startButton;
-        [SerializeField] private Canvas startCanvas;
-
-        public event Action StartGame;
         
+        private Canvas _startCanvas;
+        public event Action StartGame;
+
+        private void Awake()
+        {
+            _startCanvas = GetComponent<Canvas>();
+        }
+
         private void OnEnable()
         {
             startButton.onClick.AddListener(OnStartGame);
@@ -24,7 +30,7 @@ namespace WordAlgorithm
         private void OnStartGame()
         {
             StartGame?.Invoke();
-            startCanvas.enabled = false;
+            _startCanvas.enabled = false;
         }
     }
 }

@@ -15,14 +15,17 @@ namespace WordAlgorithm
         
         public void Init(GridConfig gridConfig)
         {
-            Debug.Log("INIT GamePanel");
+            confirmButton.onClick.AddListener(CheckResult);
             InitGrid(gridConfig.grid);
+        }
+
+        private void CheckResult()
+        {
+            Debug.Log($"Check: {inputField.text}");
         }
 
         private void InitGrid(List<List<string>> grid)
         {
-            Debug.Log("INIT GRID");
-            
             for (int i = 0; i < grid.Count; i++)
             {
                var newRow = Instantiate(rowPrefab, parentForRows);
