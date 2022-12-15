@@ -17,12 +17,12 @@ namespace WordAlgorithm.Utilities
         
         private void OnEnable()
         {
-            _startPanel.StartButtonPreessed += OnLoadGameProcess;
+            _startPanel.StartButtonPressed += OnLoadGameProcess;
         }
 
         private void OnDisable()
         {
-            _startPanel.StartButtonPreessed -= OnLoadGameProcess;
+            _startPanel.StartButtonPressed -= OnLoadGameProcess;
         }
 
         private async void OnLoadGameProcess()

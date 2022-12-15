@@ -13,30 +13,18 @@ namespace WordAlgorithm.GamePanels
         private string _nameOfRow = "Row";
         private GamePanelChecker _panelChecker;
         private IFailReaction _failReaction;
-        private GridConfig _config;
         private GamePanelView _panelView;
         
-
         public GamePanelPresenter(GamePanelView panelView, GridConfig config)
         {
             _panelView = panelView;
-            _config = config;
             panelView.ConfirmButton.onClick.AddListener(CheckResult);
             _panelView.InitGrid(config.Grid);
             InitFailReactions(config.ReactionType);
-            CreateCheker();
+            CreateChecker();
         }
 
-        // public void Init(GridConfig gridConfig)
-        // {
-        //     GridConfig = gridConfig;
-        //     confirmButton.onClick.AddListener(CheckResult);
-        //     InitGrid(gridConfig.Grid);
-        //     InitFailReactions(gridConfig.ReactionType);
-        //     CreateCheker();
-        // }
-
-        private void CreateCheker()
+        private void CreateChecker()
         {
             _panelChecker = new();
             _panelChecker.OnWinInput += PlayWinReaction;
@@ -54,17 +42,6 @@ namespace WordAlgorithm.GamePanels
 
             _panelChecker.CheckStrings(_panelView.InputText, _panelView);
         }
-
-        // private void InitGrid(List<List<string>> grid)
-        // {
-        //     for (int i = 0; i < grid.Count; i++)
-        //     {
-        //         var newRow = _panelView.gameObject.Instantiate(rowPrefab, parentForRows);
-        //         newRow.name = _nameOfRow;
-        //         newRow.Init(grid[i], i);
-        //         // _gameWordGrid.Add(i, newRow.WordCells);
-        //     }
-        // }
 
         private void PlayFailReaction()
         {

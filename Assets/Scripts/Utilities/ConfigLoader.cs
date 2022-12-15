@@ -22,7 +22,8 @@ namespace WordAlgorithm.Utilities
             if(configFromEnum == null) Debug.LogException(new Exception(
                 $"Config file with name [{filename}] can't be loaded!"));
 
-            FailReactionType reactionType = (FailReactionType)Enum.Parse(typeof(FailReactionType), configFromEnum.failReaction);
+            FailReactionType reactionType = (FailReactionType)Enum.Parse(typeof(FailReactionType),
+                configFromEnum.failReaction);
             return new GridConfig(configFromEnum.grid, reactionType);
         }
     }

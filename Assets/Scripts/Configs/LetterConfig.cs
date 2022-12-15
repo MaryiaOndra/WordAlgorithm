@@ -1,6 +1,6 @@
 ﻿namespace WordAlgorithm.Configs
 {
-    public class LetterConfig
+    public struct LetterConfig
     {
         public string Letter { get; } 
         public int RowIndex{ get; } 
