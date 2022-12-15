@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace WordAlgorithm
+namespace WordAlgorithm.GamePanels
 {
     [RequireComponent(typeof(Canvas))]
     public class StartPanel : MonoBehaviour
@@ -30,6 +30,10 @@ namespace WordAlgorithm
         private void OnStartGame()
         {
             StartGame?.Invoke();
+        }
+
+        public void DisableScreen()
+        {
             _startCanvas.enabled = false;
         }
     }

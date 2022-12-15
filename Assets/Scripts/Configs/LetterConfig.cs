@@ -1,4 +1,4 @@
-﻿namespace WordAlgorithm
+﻿namespace WordAlgorithm.Configs
 {
     public class LetterConfig
     {

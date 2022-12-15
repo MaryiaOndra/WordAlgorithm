@@ -1,27 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using ModestTree;
-using UnityEngine;
+using WordAlgorithm.Configs;
+using WordAlgorithm.Interfaces;
 
-namespace WordAlgorithm
+namespace WordAlgorithm.Utilities
 {
-    public class WordOrganizer
+    public class WordOrganizer : IWordOrganizer
     {
         private const int MIN_WORD_LENGTH = 3;
 
-        private Dictionary<string, List<LetterConfig>> lettersConfigs;
+        public Dictionary<string, List<LetterConfig>> LettersConfigs { get; private set; }
         
         public void OrganizeWordList(List<List<string>> gridConfig)
         {
-            lettersConfigs = new Dictionary<string, List<LetterConfig>>();
+            LettersConfigs = new Dictionary<string, List<LetterConfig>>();
             
             FindWordsInGrid(gridConfig, true);
             FindWordsInGrid(gridConfig, false);
-            
-            foreach (var key in lettersConfigs.Keys)
-            {
-              Debug.Log($"Words: {key}");  
-            }
         }
 
         private void FindWordsInGrid(List<List<string>> gridConfig, bool isHorisontal)
@@ -45,7 +41,9 @@ namespace WordAlgorithm
                         continue;
                     }
 
-                    LetterConfig newLetter = new LetterConfig(trimmedLetter, i, j);
+                    LetterConfig newLetter = new LetterConfig(trimmedLetter,
+                        isHorisontal ? i : j,
+                        isHorisontal ? j : i);
                     newLettersConfigs.Add(newLetter);
                     newWord += trimmedLetter;
                 }
@@ -58,7 +56,7 @@ namespace WordAlgorithm
         {
             if (newWord.Length >= MIN_WORD_LENGTH)
             {
-                lettersConfigs.Add(newWord, newLettersConfigs);
+                LettersConfigs.Add(newWord, newLettersConfigs);
             }  
         }
     }
