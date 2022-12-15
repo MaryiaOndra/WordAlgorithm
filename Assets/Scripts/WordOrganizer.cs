@@ -15,68 +15,26 @@ namespace WordAlgorithm
         {
             lettersConfigs = new Dictionary<string, List<LetterConfig>>();
             
-            FindHorizontalWords(gridConfig);
-            FindVerticalWords(gridConfig);
-            
-            Debug.Log("KEYS: " +  lettersConfigs.Keys.Count);
+            FindWordsInGrid(gridConfig, true);
+            FindWordsInGrid(gridConfig, false);
             
             foreach (var key in lettersConfigs.Keys)
             {
               Debug.Log($"Words: {key}");  
             }
         }
-        
-        private void FindHorizontalWords(List<List<string>> gridConfig)
+
+        private void FindWordsInGrid(List<List<string>> gridConfig, bool isHorisontal)
         {
             for (int i = 0; i < gridConfig.Count; i++)
             {
                 List<LetterConfig> newLettersConfigs = new List<LetterConfig>();
                 string newWord = String.Empty;
-                
+
                 for (int j = 0; j < gridConfig[i].Count; j++)
                 {
-                    var trimmedLetter =  gridConfig[i][j].Trim();
-                   
-                    if (trimmedLetter.IsEmpty())
-                    {
-                        if (!newWord.IsEmpty() && (newWord.Length < MIN_WORD_LENGTH))
-                        {
-                            Debug.Log("CLEAR");
-                            newLettersConfigs.Clear();
-                            newWord = String.Empty;
-                        }
-                        Debug.Log("CONTINUE");
-                        continue;
-                    }
+                    string trimmedLetter = isHorisontal ? gridConfig[i][j].Trim() : gridConfig[j][i].Trim();
 
-
-                    LetterConfig newLetter = new LetterConfig( trimmedLetter,i, j);
-                    newLettersConfigs.Add(newLetter);
-                    Debug.Log("ADD LETTER:" + newLetter);
-                    newWord += trimmedLetter;
-                    Debug.Log("ADD WORD LETTER:" + newWord);
-                }
-                
-                Debug.Log("NEW WORD:" + newWord);
-
-                if (newWord.Length >= MIN_WORD_LENGTH)
-                {
-                    lettersConfigs.Add(newWord, newLettersConfigs);
-                }
-            }
-        }
-
-        private void FindVerticalWords(List<List<string>> gridConfig)
-        {
-            for (int i = 0; i < gridConfig.Count; i++)
-            {
-                List<LetterConfig> newLettersConfigs = new List<LetterConfig>();
-                string newWord = String.Empty;
-                
-                for (int j = 0; j < gridConfig.Count; j++)
-                {
-                    var trimmedLetter = gridConfig[j][i].Trim();
-                    
                     if (trimmedLetter.IsEmpty())
                     {
                         if (newWord.Length < MIN_WORD_LENGTH)
@@ -87,30 +45,22 @@ namespace WordAlgorithm
                         continue;
                     }
 
-                    LetterConfig newLetter = new LetterConfig( trimmedLetter,i, j);
+                    LetterConfig newLetter = new LetterConfig(trimmedLetter, i, j);
                     newLettersConfigs.Add(newLetter);
                     newWord += trimmedLetter;
                 }
-                
-                if (newWord.Length >= MIN_WORD_LENGTH)
-                {
-                    lettersConfigs.Add(newWord, newLettersConfigs);
-                }
+
+                AddWordToDictionary(newWord, newLettersConfigs);
             }
         }
-    }
-    
-    public struct LetterConfig
-    { 
-        public string Letter { get; } 
-        public int RowIndex{ get; } 
-        public int ColumnIndex{ get; } 
 
-        public LetterConfig(string letter, int rowIndex, int columnIndex)
+        private void AddWordToDictionary(string newWord, List<LetterConfig> newLettersConfigs)
         {
-            Letter = letter;
-            RowIndex = rowIndex;
-            ColumnIndex = columnIndex;
+            if (newWord.Length >= MIN_WORD_LENGTH)
+            {
+                lettersConfigs.Add(newWord, newLettersConfigs);
+            }  
         }
     }
 }
+    

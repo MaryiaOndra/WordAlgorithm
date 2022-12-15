@@ -17,12 +17,14 @@ namespace WordAlgorithm
             startPanel.StartGame += LoadGameConfig;
         }
 
-        private void LoadGameConfig()
+        private async void LoadGameConfig()
         {
             var configLoader = new ConfigLoader();
-            GridConfig levelConfig = configLoader.LoadConfigByName(TEST_LEVEl_CONFIG_NAME);
+            GridConfig levelConfig = await configLoader.LoadConfigByName(TEST_LEVEl_CONFIG_NAME);
+            Debug.Log($"Level  config: {levelConfig.failReaction}");
+            
             gamePanel.Init(levelConfig);
-
+            //TODO: make organizer as separate injected class
             Organizer = new WordOrganizer();
             Organizer.OrganizeWordList(levelConfig.grid);
             //from grid config create list with words, and with letters and coordinates,
