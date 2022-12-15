@@ -5,7 +5,7 @@ using ModestTree;
 using TMPro;
 using UnityEngine;
 using WordAlgorithm.Configs;
-using WordAlgorithm.Utilities;
+using WordAlgorithm.Interfaces;
 using Zenject;
 
 namespace WordAlgorithm.GamePanels
@@ -19,6 +19,7 @@ namespace WordAlgorithm.GamePanels
         
         private CanvasGroup  _canvasGroup;
         private bool _isOpened;
+        private IFailReaction _failReaction;
         
         /// <summary>
         /// position of the cell where X is row, Y is column
@@ -33,7 +34,7 @@ namespace WordAlgorithm.GamePanels
         public void Init(string letter, Vector2 position)
         {
             CheckIfEmpty(letter);
-            _gamePanelView.GuessedWrong += FailReaction;
+
             _gamePanelView.GuessedRight += CheckLetterToOpen;
             _position = position;
         }
@@ -53,7 +54,6 @@ namespace WordAlgorithm.GamePanels
             }
         }
         
-        
         private void CheckLetterToOpen(List<LetterConfig> configs)
         {
             bool isCellNeedToOpen = configs.Any(cell =>
@@ -63,25 +63,10 @@ namespace WordAlgorithm.GamePanels
                 OpenLetterReaction();
         }
 
-        //TODO: add reactions to another class
         public void OpenLetterReaction()
         {
             letterText.DOFade(1f, timeToOpen);
             _isOpened = true;
-        }
-
-        public void FailReaction(FailReactionType reactionType )
-        {
-            switch (reactionType)
-            {
-                case FailReactionType.Sound:
-                    Debug.Log("FAIL REACTION SOUND");
-                    break;
-                case FailReactionType.Shake:
-                    Debug.Log("FAIL REACTION SHAKE");
-                    transform.DOPunchScale(Vector3.one, 0.5f);
-                    break;
-            }
         }
     } 
 }

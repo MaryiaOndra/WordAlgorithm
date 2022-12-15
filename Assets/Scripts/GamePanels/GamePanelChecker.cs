@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 using WordAlgorithm.Configs;
 
 namespace WordAlgorithm.GamePanels

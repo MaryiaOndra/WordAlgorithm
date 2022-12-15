@@ -10,7 +10,7 @@ namespace WordAlgorithm.GamePanels
         [SerializeField] private Button startButton;
         
         private Canvas _startCanvas;
-        public event Action StartGame;
+        public event Action StartButtonPreessed;
 
         private void Awake()
         {
@@ -29,7 +29,7 @@ namespace WordAlgorithm.GamePanels
 
         private void OnStartGame()
         {
-            StartGame?.Invoke();
+            StartButtonPreessed?.Invoke();
         }
 
         public void DisableScreen()

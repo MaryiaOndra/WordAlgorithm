@@ -132,7 +132,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 20184915}
-  - component: {fileID: 20184916}
   - component: {fileID: 20184914}
   - component: {fileID: 20184917}
   - component: {fileID: 20184918}
@@ -185,22 +184,6 @@ RectTransform:
   m_AnchoredPosition: {x: 720, y: 1280}
   m_SizeDelta: {x: 1440, y: 2560}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &20184916
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 20184911}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 378649e0c305c1d498ef4490ed29dee9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  confirmButton: {fileID: 924619664}
-  inputField: {fileID: 1310316399}
-  rowPrefab: {fileID: 2245402786599060249, guid: d0aefaa3de47ab84a8dbca7ff39283c2, type: 3}
-  parentForRows: {fileID: 1363515225}
 --- !u!114 &20184917
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -320,8 +303,9 @@ GameObject:
   m_Component:
   - component: {fileID: 568851567}
   - component: {fileID: 568851569}
+  - component: {fileID: 568851570}
   m_Layer: 5
-  m_Name: GamePanel
+  m_Name: GamePanelView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -358,6 +342,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 568851566}
   m_CullTransparentMesh: 1
+--- !u!114 &568851570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 568851566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 378649e0c305c1d498ef4490ed29dee9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  confirmButton: {fileID: 924619664}
+  inputField: {fileID: 1310316399}
+  rowPrefab: {fileID: 2245402786599060249, guid: d0aefaa3de47ab84a8dbca7ff39283c2, type: 3}
+  parentForRows: {fileID: 1363515225}
 --- !u!1 &924619662
 GameObject:
   m_ObjectHideFlags: 0
@@ -692,7 +692,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6f543ab3313d5d4fa47203f8874ccba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gamePanelView: {fileID: 20184916}
+  gamePanelView: {fileID: 568851570}
+  startPanel: {fileID: 1557523502}
 --- !u!1 &1141987656
 GameObject:
   m_ObjectHideFlags: 0
@@ -1209,7 +1210,7 @@ GameObject:
   - component: {fileID: 1376951484}
   - component: {fileID: 1376951485}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: GameLoader
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1242,9 +1243,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45dda6245ad9c994aae7b66194990cf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  configName: WordsConfig_1
-  startPanel: {fileID: 1557523502}
-  gamePanelView: {fileID: 20184916}
+  configName: WordsConfig_shake
 --- !u!1 &1557523497
 GameObject:
   m_ObjectHideFlags: 0

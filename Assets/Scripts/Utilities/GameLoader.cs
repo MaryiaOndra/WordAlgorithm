@@ -9,29 +9,29 @@ namespace WordAlgorithm.Utilities
     public class GameLoader : MonoBehaviour
     {
         [SerializeField] private string configName = "WordsConfig_1";
-        [SerializeField] private StartPanel startPanel;
-        [SerializeField] private GamePanelView gamePanelView;
-
+        
+        [Inject] private StartPanel _startPanel;
+        [Inject] private GamePanelView _gamePanelView;
         [Inject] private ILoadConfig _loadConfig;
         [Inject] private IWordOrganizer _wordOrganizer;
         
         private void OnEnable()
         {
-            startPanel.StartGame += StartLoadingGameLevel;
+            _startPanel.StartButtonPreessed += OnLoadGameProcess;
         }
 
         private void OnDisable()
         {
-            startPanel.StartGame -= StartLoadingGameLevel;
+            _startPanel.StartButtonPreessed -= OnLoadGameProcess;
         }
 
-        private async void StartLoadingGameLevel()
+        private async void OnLoadGameProcess()
         {
             GridConfig levelConfig = await _loadConfig.Load(configName);
             _wordOrganizer.OrganizeWordList(levelConfig.Grid);
-            gamePanelView.Init(levelConfig);
+            var gamePanelPresenter = new GamePanelPresenter(_gamePanelView, levelConfig);
             await Task.Delay(10);
-            startPanel.DisableScreen();
+            _startPanel.DisableScreen();
         }
     }
 }
