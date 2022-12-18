@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using ModestTree;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,6 +20,8 @@ namespace WordAlgorithm.GamePanels
         [SerializeField] private WordRow rowPrefab;
         [SerializeField] private Transform parentForRows;
 
+        private List<WordRow> _wordRows = new();
+        
         public Button ConfirmButton => confirmButton;
         public string InputText { 
             get => inputField.text;
@@ -25,13 +29,30 @@ namespace WordAlgorithm.GamePanels
         }
 
         private string _nameOfRow = "Row";
-
-        public event Action<List<LetterConfig>> GuessedRight;
-
+        
         public void InvokeGuessedRight(List<LetterConfig> letterConfigs)
         {
-            GuessedRight?.Invoke(letterConfigs);
+            CheckCellsToOpen(letterConfigs);
             inputField.text = string.Empty;
+        }
+
+        private async void CheckCellsToOpen(List<LetterConfig> letterConfigs)
+        {
+            foreach (var wordRow in _wordRows)
+            {
+                foreach (var gameCell in wordRow.WordCells)
+                {
+                    bool isCellNeedToOpen = letterConfigs.Any(cell =>
+                        cell.Position == gameCell.Position);
+
+                    if (isCellNeedToOpen && !gameCell.IsOpened)
+                    {
+                        LetterConfig configCell = letterConfigs.First(cell =>
+                            cell.Position == gameCell.Position);
+                        await gameCell.OpenCellWithText(configCell.Letter);
+                    }
+                }
+            }
         }
 
         public void InitGrid(List<List<string>> grid)
@@ -41,6 +62,7 @@ namespace WordAlgorithm.GamePanels
                var newRow = Instantiate(rowPrefab, parentForRows);
                newRow.name = _nameOfRow;
                newRow.Init(grid[i], i);
+               _wordRows.Add(newRow);
             }
         }
     }

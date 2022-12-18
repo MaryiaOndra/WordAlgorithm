@@ -1,16 +1,20 @@
-﻿namespace WordAlgorithm.Configs
+﻿using UnityEngine;
+
+namespace WordAlgorithm.Configs
 {
     public struct LetterConfig
     {
-        public string Letter { get; } 
-        public int RowIndex{ get; } 
-        public int ColumnIndex{ get; } 
+        public string Letter { get; }
+
+        /// <summary>
+        /// position of the cell where X is row, Y is column
+        /// </summary>
+        public Vector2 Position { get; }
 
         public LetterConfig(string letter, int rowIndex, int columnIndex)
         {
             Letter = letter;
-            RowIndex = rowIndex;
-            ColumnIndex = columnIndex;
+            Position = new Vector2(rowIndex, columnIndex);
         }
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using DG.Tweening;
 using ModestTree;
 using TMPro;
@@ -13,18 +14,17 @@ namespace WordAlgorithm.GamePanels
     [RequireComponent(typeof(CanvasGroup))]
     public class WordCell : MonoBehaviour
     {
-        [Inject] private GamePanelView _gamePanelView;
         [SerializeField] private TMP_Text letterText;
         [SerializeField] private float timeToOpen = 0.5f;
         
         private CanvasGroup  _canvasGroup;
-        private bool _isOpened;
         private IFailReaction _failReaction;
-        
+
         /// <summary>
         /// position of the cell where X is row, Y is column
         /// </summary>
-        private Vector2 _position; 
+        public Vector2 Position { get; private set; }
+        public bool IsOpened { get; private set; }
 
         private void Awake()
         {
@@ -34,9 +34,7 @@ namespace WordAlgorithm.GamePanels
         public void Init(string letter, Vector2 position)
         {
             CheckIfEmpty(letter);
-
-            _gamePanelView.GuessedRight += CheckLetterToOpen;
-            _position = position;
+            Position = position;
         }
 
         private void CheckIfEmpty(string letter)
@@ -54,19 +52,15 @@ namespace WordAlgorithm.GamePanels
             }
         }
         
-        private void CheckLetterToOpen(List<LetterConfig> configs)
+        public async Task OpenCellWithText(string letter)
         {
-            bool isCellNeedToOpen = configs.Any(cell =>
-                (cell.ColumnIndex == _position.y) && (cell.RowIndex == _position.x));
-            
-            if(isCellNeedToOpen && !_isOpened)
-                OpenLetterReaction();
-        }
-
-        public void OpenLetterReaction()
-        {
-            letterText.DOFade(1f, timeToOpen);
-            _isOpened = true;
+            letterText.text = letter;
+            var fadeTask = letterText.DOFade(1f, timeToOpen);
+            while(fadeTask.IsActive())
+            {
+                await Task.Yield();
+            }
+            IsOpened = true;
         }
     } 
 }
